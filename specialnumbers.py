@@ -223,10 +223,11 @@ def is_antiprime(number: int) -> bool:
     else:
         return True
 
+
+# TODO: NEEDS WORK
 """
-NEEDS WORK
 def is_practical(number: int) -> bool:
-    All it's smaller integers can be expressed as the sum of distinct proper divisors of itself.
+    # All it's smaller integers can be expressed as the sum of distinct proper divisors of itself.
     prop_div = proper_divisors(number)
     sums_of_all_possible_combinations = []
     for i in range(len(prop_div)):
@@ -263,6 +264,6 @@ attributes_available = {'Prime': is_prime,
                         'Antiprime': is_antiprime}#,
                         #'Practical': is_practical}
 
-# to test stuff
+# For testing only
 if __name__ == '__main__':
     print(is_prime(22))
