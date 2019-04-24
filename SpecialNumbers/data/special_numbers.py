@@ -3,16 +3,12 @@ A collection of different interesting number's properties from recreational numb
 A property is inherent of the number.
 """
 # ALL THE ROUND() ARE DUE TO FLOATING ARITHMETIC ISSUES
-import tools
-
-
-def display(result, prompt):
-    print("{0}\n{1}\n{2}\n{0}".format("="*30, prompt, result))
+from SpecialNumbers.data import tools
 
 
 def check_attributes_init():
     """ Collects needed data """
-    number = tools.get_integer("Number to be assessed: ")
+    number = tools.get_integer('Number to be assessed: ')
     return check_attributes(number)
 
 
@@ -23,14 +19,14 @@ def check_attributes(number: int):
         if value is None:
             value = False
         attributes[attr] = value
-    prompt = "Attributes of number {}:".format(number)
+    prompt = 'Attributes of number {}: '.format(number)
     return attributes, prompt
 
 
 def series_constructor_init():
     """ Collects needed data """
     attribute = tools.get_option(attributes_available)
-    elements = tools.get_integer("Number of elements: ")
+    elements = tools.get_integer('Number of elements: ')
     return series_constructor(attribute, elements)
 
 
@@ -42,7 +38,7 @@ def series_constructor(check, elements=0):
         if attributes_available[check](i):
             seq.append(i)
         i += 1
-    prompt = "{} sequence with the {} first elements:".format(check, elements)
+    prompt = '{} sequence with the {} first elements: '.format(check, elements)
     return seq, prompt
 
 
@@ -99,13 +95,13 @@ def is_prime(number: int) -> bool:
 
 def is_square(number: int) -> bool:
     """ Perfect square n**2. """
-    n = round(number ** (1/2), 5)
+    n = round(number ** (1 / 2), 5)
     return True if number % n == 0 else False
 
 
 def is_cube(number: int) -> bool:
     """ Perfect cube n**3. """
-    n = round(number ** (1/3), 5)
+    n = round(number ** (1 / 3), 5)
     return True if number % n == 0 else False
 
 
@@ -143,7 +139,7 @@ def is_powerful(number: int) -> bool:
     """ Can be defined as the product of a square and a cube. """
     for i in range(1, number + 1):
         for j in range(1, number + 1):
-            if (i**2) * (j**3) == number:
+            if (i ** 2) * (j ** 3) == number:
                 return True
     else:
         return False
@@ -171,7 +167,7 @@ def is_harmonic(number: int) -> bool:
     dividend = len(divisors)
     divisor = 0
     for j in divisors:
-        divisor += 1/j
+        divisor += 1 / j
     return True if round(dividend % divisor, 5) == 0 else False
 
 
@@ -242,7 +238,7 @@ def is_practical(number: int) -> bool:
 def main():
     option = tools.get_option(options_available)
     result, prompt = options_available[option]()
-    display(result, prompt)
+    tools.display(result, prompt)
 
 
 options_available = {'Attributes': check_attributes_init,
@@ -261,8 +257,8 @@ attributes_available = {'Prime': is_prime,
                         'Sphenic': is_sphenic,
                         'Smith': is_smith,
                         'Harshad': is_harshad,
-                        'Antiprime': is_antiprime}#,
-                        #'Practical': is_practical}
+                        'Antiprime': is_antiprime}
+# 'Practical': is_practical}
 
 # For testing only
 if __name__ == '__main__':

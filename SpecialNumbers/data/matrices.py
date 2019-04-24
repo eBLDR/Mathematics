@@ -1,7 +1,7 @@
 """ A collection of matrix transformations and other properties. """
-
-import tools
 import random
+
+from SpecialNumbers.data import tools
 
 
 def display(matrix: list, prompt: str) -> None:
@@ -35,9 +35,9 @@ def create_matrix_init():
     """ Collects needed data. """
     matrix_types = {'Null': 'null', 'Identity': 'identity', 'Known': 'known', 'Random': 'random'}
     type_ = matrix_types[tools.get_option(matrix_types)]
-    rows = tools.get_integer("Number of rows: ")
+    rows = tools.get_integer('Number of rows: ')
     if type_ != 'identity':
-        columns = tools.get_integer("Number of columns: ")
+        columns = tools.get_integer('Number of columns: ')
     else:
         columns = rows
     return create_matrix(rows, columns, type_)
@@ -61,12 +61,12 @@ def create_matrix(rows: int, columns: int, type_: str):
                 else:
                     row.append(0)
             elif type_ == 'known':
-                row.append(tools.get_integer("Element in row {} column {}: ".format(r+1, c+1)))
+                row.append(tools.get_integer('Element in row {} column {}: '.format(r + 1, c + 1)))
             elif type_ == 'random':
                 row.append(random.randint(0, 9))
         matrix.append(row)
 
-    prompt = "{} matrix of {} rows and {} columns:".format(type_, rows, columns)
+    prompt = '{} matrix of {} rows and {} columns: '.format(type_, rows, columns)
     return matrix, prompt
 
 
@@ -94,7 +94,7 @@ def is_magic(matrix: list) -> bool:
     diagonal_2 = []  # from top right to bottom left
     for i in range(len(matrix)):
         diagonal_1.append(matrix[i][i])
-        diagonal_2.append(matrix[i][len(matrix)-1-i])
+        diagonal_2.append(matrix[i][len(matrix) - 1 - i])
 
     list_of_sums.append(sum_of_list(diagonal_1))
     list_of_sums.append(sum_of_list(diagonal_2))

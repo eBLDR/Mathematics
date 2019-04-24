@@ -2,11 +2,7 @@
 A collection of different interesting sequences from recreational numbers theory.
 Series are dependent on the other numbers in the series.
 """
-import tools
-
-
-def display(result, prompt):
-    print("{0}\n{1}\n{2}\n{0}".format("="*30, prompt, result))
+from SpecialNumbers.data import tools
 
 
 def fibonacci_series(elements=0) -> list:
@@ -27,10 +23,10 @@ def padovan_series(elements=0) -> list:
 
 def main():
     series = tools.get_option(series_available)
-    elements = tools.get_integer("Number of elements: ")
+    elements = tools.get_integer('Number of elements: ')
     result = series_available[series](elements)
-    prompt = "{} sequence with the {} first elements:".format(series, elements)
-    display(result, prompt)
+    prompt = '{} sequence with the {} first elements: '.format(series, elements)
+    tools.display(result, prompt)
 
 
 series_available = {'Fibonacci': fibonacci_series,

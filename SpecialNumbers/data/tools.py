@@ -6,6 +6,10 @@ def quit_():
     raise SystemExit
 
 
+def display(result, prompt):
+    print('{0}\n{1}\n{2}\n{0}'.format('=' * 30, prompt, result))
+
+
 def display_menu(options: dict) -> None:
     """ Nice menu display. """
     print("AVAILABLE OPTIONS:\n(type Quit to quit)")
