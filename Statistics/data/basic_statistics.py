@@ -1,32 +1,35 @@
-def max_value(data_set: list) -> int:
+import math
+
+
+def max_value(data_set: list) -> (int, float):
     """
     Calculates the maximum value.
     """
     return max(data_set)
 
 
-def min_value(data_set: list) -> int:
+def min_value(data_set: list) -> (int, float):
     """
     Calculates the minimum value.
     """
     return min(data_set)
 
 
-def range_(data_set: list) -> int:
+def range_(data_set: list) -> (int, float):
     """
     Calculates the range, highest value - lowest value.
     """
     return max(data_set) - min(data_set)
 
 
-def mean(data_set: list) -> int:
+def mean(data_set: list) -> (int, float):
     """
     Calculates the arithmetic mean, the average.
     """
     return sum(data_set) / len(data_set)
 
 
-def median(data_set: list) -> int:
+def median(data_set: list) -> (int, float):
     """
     Calculates the median, the central values of a sorted set.
     """
@@ -64,8 +67,44 @@ def mode(data_set: list) -> list:
     return result
 
 
-s = [100, 98, 105, 90, 102, 90, 110]
-print(mean(s))
-print(median(s))
+def variance(data_set: list) -> (int, float):
+    """
+    Calculates the variance, the mean of the squared difference from each value to the mean.
+    """
+    mean_ = mean(data_set)
+    result = mean([(mean_ - n) ** 2 for n in data_set])
+    return result
 
-print(mode(s))
+
+def standard_deviation(data_set: list) -> (int, float):
+    """
+    Calculates standard deviation, how far apart all the numbers are in a set.
+    """
+    return math.sqrt(variance(data_set))
+
+
+def higher_median(data_set: list) -> (int, float):
+    """
+    Calculates the higher median, the median of the subset of the 50% higher numbers.
+    """
+    data_set.sort()
+    num_of_items = len(data_set)
+    if num_of_items % 2 == 0:
+        return median(data_set[int(num_of_items / 2):])
+    else:
+        return median(data_set[int(num_of_items / 2) + 1:])
+
+
+def lower_median(data_set: list) -> (int, float):
+    """
+    Calculates the lower median, the median of the subset of the 50% lower numbers.
+    """
+    data_set.sort()
+    return median(data_set[:int(len(data_set) / 2)])
+
+
+def interquartile_range(data_set: list) -> (int, float):
+    """
+    Calculates the interquartile range (IQR), the difference between higher and lower median.
+    """
+    return higher_median(data_set) - lower_median(data_set)
