@@ -3,13 +3,12 @@ A collection of different interesting number's properties from recreational numb
 A property is inherent of the number.
 """
 # ALL THE ROUND() ARE DUE TO FLOATING ARITHMETIC ISSUES
-from SpecialNumbers.data import tools
+import tools
 
 
 def check_attributes_init():
     """ Collects needed data """
-    number = tools.get_integer('Number to be assessed: ')
-    return check_attributes(number)
+    return check_attributes(tools.get_integer('Number to be assessed: '))
 
 
 def check_attributes(number: int):
@@ -19,15 +18,16 @@ def check_attributes(number: int):
         if value is None:
             value = False
         attributes[attr] = value
-    prompt = 'Attributes of number {}: '.format(number)
-    return attributes, prompt
+
+    return attributes, 'Attributes of number {}: '.format(number)
 
 
 def series_constructor_init():
     """ Collects needed data """
-    attribute = tools.get_option(attributes_available)
-    elements = tools.get_integer('Number of elements: ')
-    return series_constructor(attribute, elements)
+    return series_constructor(
+        tools.get_option(attributes_available),
+        tools.get_integer('Number of elements: '),
+    )
 
 
 def series_constructor(check, elements=0):
@@ -38,8 +38,8 @@ def series_constructor(check, elements=0):
         if attributes_available[check](i):
             seq.append(i)
         i += 1
-    prompt = '{} sequence with the {} first elements: '.format(check, elements)
-    return seq, prompt
+
+    return seq, '{} sequence with the {} first elements: '.format(check, elements)
 
 
 def proper_divisors(number: int) -> list:
@@ -230,36 +230,40 @@ def is_practical(number: int) -> bool:
         for j in range(i, len(prop_div)):
             print(i, j)
             sums_of_all_possible_combinations.append(sum(prop_div[i:j+1]))
-            print("slice is ", prop_div[i:j+1])
-            print("list is ", sums_of_all_possible_combinations)
+            print('slice is ', prop_div[i:j+1])
+            print('list is ', sums_of_all_possible_combinations)
 """
 
+options_available = {
+    'Attributes': check_attributes_init,
+    'Sequences': series_constructor_init,
+}
 
-def main():
+attributes_available = {
+    'Prime': is_prime,
+    'Square': is_square,
+    'Cube': is_cube,
+    'Perfect': is_perfect,
+    'Abundant': is_abundant,
+    'Happy': is_happy,
+    'Powerful': is_powerful,
+    'Palindromic': is_palindromic,
+    'Magic': is_magic,
+    'Harmonic': is_harmonic,
+    'Sphenic': is_sphenic,
+    'Smith': is_smith,
+    'Harshad': is_harshad,
+    'Antiprime': is_antiprime,
+}
+# 'Practical': is_practical}
+
+if __name__ == '__main__':
     option = tools.get_option(options_available)
     result, prompt = options_available[option]()
     tools.display(result, prompt)
 
-
-options_available = {'Attributes': check_attributes_init,
-                     'Sequences': series_constructor_init}
-
-attributes_available = {'Prime': is_prime,
-                        'Square': is_square,
-                        'Cube': is_cube,
-                        'Perfect': is_perfect,
-                        'Abundant': is_abundant,
-                        'Happy': is_happy,
-                        'Powerful': is_powerful,
-                        'Palindromic': is_palindromic,
-                        'Magic': is_magic,
-                        'Harmonic': is_harmonic,
-                        'Sphenic': is_sphenic,
-                        'Smith': is_smith,
-                        'Harshad': is_harshad,
-                        'Antiprime': is_antiprime}
-# 'Practical': is_practical}
-
-# For testing only
-if __name__ == '__main__':
-    print(is_prime(22))
+    # series = tools.get_option(attributes_available)
+    # elements = tools.get_integer('Number of elements: ')
+    # result = attributes_available[series](elements)
+    # prompt = '{} sequence with the {} first elements: '.format(series, elements)
+    # tools.display(result, prompt)

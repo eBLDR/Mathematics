@@ -1,7 +1,7 @@
 """ A collection of matrix transformations and other properties. """
 import random
 
-from SpecialNumbers.data import tools
+import tools
 
 
 def display(matrix: list, prompt: str) -> None:
@@ -13,22 +13,10 @@ def display(matrix: list, prompt: str) -> None:
         print()
 
 
-def sum_of_list(list_: list) -> int:
-    """ Adds up all the elements in a list. """
-    sum_ = 0
-    for num in list_:
-        sum_ = sum_ + num
-
-    return sum_
-
-
 def check_is_square(matrix: list) -> bool:
     """ Check if number of rows is equal to number of columns.
     It's assumed that the argument passed as matrix has at least 1 row containing 1 column. """
-    if len(matrix) == len(matrix[0]):
-        return True
-    else:
-        return False
+    return len(matrix) == len(matrix[0])
 
 
 def create_matrix_init():
@@ -40,6 +28,7 @@ def create_matrix_init():
         columns = tools.get_integer('Number of columns: ')
     else:
         columns = rows
+
     return create_matrix(rows, columns, type_)
 
 
@@ -64,30 +53,32 @@ def create_matrix(rows: int, columns: int, type_: str):
                 row.append(tools.get_integer('Element in row {} column {}: '.format(r + 1, c + 1)))
             elif type_ == 'random':
                 row.append(random.randint(0, 9))
+
         matrix.append(row)
 
     prompt = '{} matrix of {} rows and {} columns: '.format(type_, rows, columns)
+
     return matrix, prompt
 
 
 def is_magic(matrix: list) -> bool:
     """ Is magic if the sum of all the items on each row, and each column, and each diagonal is equal. """
     # must be squared to be able to be magic
-    is_square = check_is_square(matrix)
-    if not is_square:
+    if not check_is_square(matrix):
         return False
 
     list_of_sums = []
+
     # rows
     for row in matrix:
-        list_of_sums.append(sum_of_list(row))
+        list_of_sums.append(sum(row))
 
     # columns
     for i in range(len(matrix[0])):
         column = []
         for j in range(len(matrix)):
             column.append(matrix[j][i])
-        list_of_sums.append(sum_of_list(column))
+        list_of_sums.append(sum(column))
 
     # diagonals
     diagonal_1 = []  # from top left to bottom right
@@ -96,14 +87,14 @@ def is_magic(matrix: list) -> bool:
         diagonal_1.append(matrix[i][i])
         diagonal_2.append(matrix[i][len(matrix) - 1 - i])
 
-    list_of_sums.append(sum_of_list(diagonal_1))
-    list_of_sums.append(sum_of_list(diagonal_2))
+    list_of_sums.append(sum(diagonal_1))
+    list_of_sums.append(sum(diagonal_2))
 
     # check if all the numbers in list_of_sums are equal
     reference_number = list_of_sums[0]  # we choose the first one as a reference
 
-    for valor in list_of_sums[1:]:  # no need to compare to itself
-        if valor != reference_number:
+    for value in list_of_sums[1:]:  # no need to compare to itself
+        if value != reference_number:
             return False
     else:
         return True

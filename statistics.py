@@ -108,3 +108,14 @@ def interquartile_range(data_set: list) -> (int, float):
     Calculates the interquartile range (IQR), the difference between higher and lower median.
     """
     return higher_median(data_set) - lower_median(data_set)
+
+
+if __name__ == '__main__':
+    """
+    Run all callable objects in module.
+    :param data_set: data set to be assessed
+    """
+    sample = [100, 98, 105, 90, 102, 110, 102]
+
+    for name, method in [(name_, method_) for name_, method_ in locals().items() if callable(method_)]:
+        print('{}: {}'.format(name.upper(), method(sample)))
