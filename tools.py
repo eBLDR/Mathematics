@@ -35,14 +35,17 @@ def display_menu(options: dict) -> None:
 def get_option(options: dict):
     """ Given a dictionary of possible options, user picks one. """
     display_menu(options)
+
     while True:
         option = input('\nChoose: ').title()
+
         if option in options.keys():
             return option
+
         elif option == 'Quit':
             quit_()
-        else:
-            print('Not available, yet.')
+
+        print('Not available, yet.')
 
 
 def get_integer(prompt=''):
