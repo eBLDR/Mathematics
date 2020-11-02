@@ -7,7 +7,7 @@ import tools
 
 
 def check_attributes_init():
-    """ Collects needed data """
+    """Collects needed data."""
     return check_attributes(tools.get_integer('Number to be assessed: '))
 
 
@@ -23,7 +23,7 @@ def check_attributes(number: int):
 
 
 def series_constructor_init():
-    """ Collects needed data """
+    """Collects needed data."""
     return series_constructor(
         tools.get_option(attributes_available),
         tools.get_integer('Number of elements: '),
@@ -31,7 +31,7 @@ def series_constructor_init():
 
 
 def series_constructor(check, elements=0):
-    """ Construct a sequence with a given number property """
+    """Construct a sequence with a given number property."""
     seq = []
     i = 1
     while len(seq) < elements:
@@ -43,7 +43,7 @@ def series_constructor(check, elements=0):
 
 
 def proper_divisors(number: int) -> list:
-    """ Returns a list with the proper divisors of a given number. """
+    """Returns a list with the proper divisors of a given number."""
     proper_div = []
     for i in range(1, number):  # finding the proper divisors
         if number % i == 0:
@@ -53,7 +53,7 @@ def proper_divisors(number: int) -> list:
 
 
 def aliquot_sum(number: int) -> int:
-    """ The sum of the proper divisors. """
+    """The sum of the proper divisors."""
     prop_div = proper_divisors(number)
     ali_sum = 0
     for i in prop_div:
@@ -63,7 +63,7 @@ def aliquot_sum(number: int) -> int:
 
 
 def prime_factors(number: int) -> list:
-    """ Returns the prime factors. """
+    """Returns the prime factors."""
     prime_fact = []
     left = number
     while left:  # finding the prime factors
@@ -79,7 +79,7 @@ def prime_factors(number: int) -> list:
 
 
 def sum_of_digits(number: int) -> int:
-    """ Returns the sum of the digits of number. """
+    """Returns the sum of the digits of number."""
     sum_dig = 0
     for i in str(number):
         sum_dig += int(i)
@@ -88,39 +88,38 @@ def sum_of_digits(number: int) -> int:
 
 
 def is_prime(number: int) -> bool:
-    """ Proper divisors include only 1. """
+    """Proper divisors include only 1."""
     prop_div = proper_divisors(number)
-    return True if len(prop_div) == 1 else False
+    return len(prop_div) == 1
 
 
 def is_square(number: int) -> bool:
-    """ Perfect square n**2. """
+    """Perfect square n**2."""
     n = round(number ** (1 / 2), 5)
-    return True if number % n == 0 else False
+    return number % n == 0
 
 
 def is_cube(number: int) -> bool:
     """ Perfect cube n**3. """
     n = round(number ** (1 / 3), 5)
-    return True if number % n == 0 else False
+    return number % n == 0
 
 
 def is_perfect(number: int) -> bool:
-    """ The sum of its proper divisors is equal to the number itself. """
-    ali_sum = aliquot_sum(number)
-    return True if ali_sum == number else False
+    """The sum of its proper divisors is equal to the number itself."""
+    return aliquot_sum(number) == number
 
 
 def is_abundant(number: int) -> bool:
-    """ The sum of its proper divisors is greater than the number itself.
-    A number with the opposite property is called 'deficient'. """
-    ali_sum = aliquot_sum(number)
-    return True if ali_sum > number else False
+    """The sum of its proper divisors is greater than the number itself.
+    A number with the opposite property is called 'deficient'."""
+    return aliquot_sum(number) > number
 
 
 def is_happy(number: int) -> bool:
-    """ Replaces the number with the sum of the squares of its digits, if the process
-    finishes reaching 1, the number is happy. Otherwise is a sad number. """
+    """Replaces the number with the sum of the squares of its digits,
+    if the process finishes reaching 1, the number is happy.
+    Otherwise is a sad number."""
     attempts = 15
     while attempts > 0:
         next_number = 0
@@ -136,7 +135,7 @@ def is_happy(number: int) -> bool:
 
 def is_powerful(number: int) -> bool:
     # LONG COMPUTING TIME
-    """ Can be defined as the product of a square and a cube. """
+    """Can be defined as the product of a square and a cube."""
     for i in range(1, number + 1):
         for j in range(1, number + 1):
             if (i ** 2) * (j ** 3) == number:
@@ -146,13 +145,13 @@ def is_powerful(number: int) -> bool:
 
 
 def is_palindromic(number: int) -> bool:
-    """ A symmetric number """
-    return True if str(number) == str(number)[::-1] else False
+    """A symmetric number."""
+    return str(number) == str(number)[::-1]
 
 
 def is_magic(number: int) -> bool:
-    """ Magic (or polydivisible) number, with given digits abcde... meets:
-    a is not 0, ab is multiple of 2, abc is multiple of 3, and so on. """
+    """Magic (or polydivisible) number, with given digits abcde... meets:
+    a is not 0, ab is multiple of 2, abc is multiple of 3, and so on."""
     for i in range(1, len(str(number)) + 1):
         if int(str(number)[0: i]) % i != 0:
             return False
@@ -161,14 +160,15 @@ def is_magic(number: int) -> bool:
 
 
 def is_harmonic(number: int) -> bool:
-    """ Harmonic divisor number (or Ore number) is a number which its harmonic mean is an integer. """
+    """Harmonic divisor number (or Ore number) is a number which its
+    harmonic mean is an integer."""
     divisors = proper_divisors(number)
     divisors.append(number)  # ! divisors include proper divisors + itself!
     dividend = len(divisors)
     divisor = 0
     for j in divisors:
         divisor += 1 / j
-    return True if round(dividend % divisor, 5) == 0 else False
+    return round(dividend % divisor, 5) == 0
 
 
 def is_sphenic(number: int) -> bool:
@@ -197,13 +197,13 @@ def is_smith(number: int) -> bool:
 
         sum_dig = sum_of_digits(number)
 
-        return True if sum_dig_fact == sum_dig else False
+        return sum_dig_fact == sum_dig
 
 
 def is_harshad(number: int) -> bool:
     """ (aka Niven) It's divisible by the sum of its digits. """
     sum_dig = sum_of_digits(number)
-    return True if number % sum_dig == 0 else False
+    return number % sum_dig == 0
 
 
 def is_antiprime(number: int) -> bool:

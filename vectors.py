@@ -2,7 +2,7 @@
 
 
 def check_length(*args):
-    """ True if all the vectors have the same length. """
+    """True if all the vectors have the same length."""
     if args:
         length_of_vectors = [len(args[i]) for i in range(len(args))]
         ref = length_of_vectors[0]
