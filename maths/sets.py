@@ -14,6 +14,10 @@ def membership(element, set_):
     return False
 
 
+def are_equal(set_a, set_b):
+    return is_subset(set_a, set_b) and is_subset(set_b, set_a)
+
+
 def is_subset(set_a, set_b):
     for e in set_a:
         if not membership(e, set_b):
@@ -22,14 +26,12 @@ def is_subset(set_a, set_b):
     return True
 
 
-def are_equal(set_a, set_b):
-    return is_subset(set_a, set_b) and is_subset(set_b, set_a)
-
-
 def are_disjoint(set_a, set_b):
     for e in set_a:
         if membership(e, set_b):
             return False
+
+    return True
 
 
 def union(set_a, set_b):
