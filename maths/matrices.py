@@ -1,7 +1,7 @@
 """ A collection of matrix transformations and other properties. """
 import random
 
-import tools
+from maths import tools
 
 
 def display(matrix: list, prompt: str) -> None:

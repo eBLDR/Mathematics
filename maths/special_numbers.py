@@ -2,8 +2,8 @@
 A collection of different interesting number's properties from recreational numbers theory.
 A property is inherent of the number.
 """
-# ALL THE ROUND() ARE DUE TO FLOATING ARITHMETIC ISSUES
-import tools
+# ALL THE ROUND() ARE USED DUE TO FLOATING ARITHMETIC ISSUES
+from maths import tools
 
 
 def check_attributes_init():
@@ -255,7 +255,7 @@ attributes_available = {
     'Harshad': is_harshad,
     'Antiprime': is_antiprime,
 }
-# 'Practical': is_practical}
+# 'Practical': is_practical,
 
 if __name__ == '__main__':
     option = tools.get_option(options_available)

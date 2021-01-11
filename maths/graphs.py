@@ -9,13 +9,14 @@ The DEGREE of a vertex in a graph is the number of edges connecting it,
 with loops counted twice.
 """
 
-my_graph = {'a': ['c'],
-            'b': ['c', 'e'],
-            'c': ['a', 'b', 'd', 'e'],
-            'd': ['c'],
-            'e': ['c', 'b'],
-            'f': []
-            }
+my_graph = {
+    'a': ['c'],
+    'b': ['c', 'e'],
+    'c': ['a', 'b', 'd', 'e'],
+    'd': ['c'],
+    'e': ['c', 'b'],
+    'f': [],
+}
 
 
 def nodes(graph):
@@ -48,6 +49,7 @@ def isolated_nodes(graph):
     for node in graph:
         if not graph[node]:
             isolated += node
+
     return isolated
 
 
@@ -61,9 +63,9 @@ def add_node(graph, new_node):
 
 
 my_node = 'x'
-print('Add new node: {}'.format(my_node))
+print(f'Add new node: {my_node}')
 add_node(my_graph, my_node)
-print('Vertices/nodes are:\n', nodes(my_graph))
+print(f'Vertices/nodes are:\n{nodes(my_graph)}')
 print('=' * 30)
 
 
@@ -85,9 +87,9 @@ def add_edge(graph, new_edge, arc=False):
 
 
 my_edge = ('x', 'a')
-print('Add new edge: {}'.format(my_edge))
+print(f'Add new edge: {my_edge}')
 add_edge(my_graph, my_edge, arc=True)
-print('Edges are:\n', edges(my_graph))
+print(f'Edges are:\n{edges(my_graph)}')
 print('=' * 30)
 
 
@@ -110,12 +112,12 @@ def find_path(graph, start_vertex, end_vertex, path=None):
             if extended_path:
                 return extended_path
 
-    return None
+    return
 
 
 start_node = 'x'
 end_node = 'e'
-print('Find path from {} to {}'.format(start_node, end_node))
+print(f'Find path from {start_node} to {end_node}')
 print(find_path(my_graph, start_node, end_node))
 
 
@@ -146,5 +148,5 @@ def find_all_paths(graph, start_vertex, end_vertex, path=None):
     return paths
 
 
-print('Find all paths from {} to {}'.format(start_node, end_node))
+print(f'Find all paths from {start_node} to {end_node}')
 print(find_all_paths(my_graph, start_node, end_node))

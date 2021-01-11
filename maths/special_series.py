@@ -2,7 +2,7 @@
 A collection of different interesting sequences from recreational numbers theory.
 Series are dependent on the other numbers in the series.
 """
-import tools
+from maths import tools
 
 
 def fibonacci_series(elements=0) -> list:

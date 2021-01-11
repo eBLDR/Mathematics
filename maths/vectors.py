@@ -31,9 +31,10 @@ def scalar_product(v1, v2):
         return r
 
 
-ve1 = [0, 5, 4]
-ve2 = [-1, 2, 6]
-ve3 = [4, -7, 0]
+if __name__ == '__main__':
+    ve1 = [0, 5, 4]
+    ve2 = [-1, 2, 6]
+    ve3 = [4, -7, 0]
 
-print(add_vectors(ve1, ve2, ve3))
-print(scalar_product(ve1, ve2))
+    print(add_vectors(ve1, ve2, ve3))
+    print(scalar_product(ve1, ve2))
