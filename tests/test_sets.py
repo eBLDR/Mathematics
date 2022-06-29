@@ -1,4 +1,5 @@
 import unittest
+from itertools import product
 
 from maths import sets
 
@@ -51,6 +52,36 @@ class SetsTest(unittest.TestCase):
             self.sample_set_c.issubset(self.sample_set_a),
         )
 
+    def test_superset(self):
+        self.assertEqual(
+            sets.is_superset(self.sample_set_c, self.sample_set_a),
+            self.sample_set_c.issuperset(self.sample_set_a),
+        )
+
+    def test_proper_subset(self):
+        self.assertEqual(
+            sets.is_proper_subset(self.sample_set_c, self.sample_set_a),
+            self.sample_set_c < self.sample_set_a,
+        )
+
+    def test_proper_superset(self):
+        self.assertEqual(
+            sets.is_proper_superset(self.sample_set_c, self.sample_set_a),
+            self.sample_set_c > self.sample_set_a,
+        )
+
+    def test_union(self):
+        self.assertEqual(
+            sets.union(self.sample_set_a, self.sample_set_b),
+            self.sample_set_a.union(self.sample_set_b),
+        )
+
+    def test_intersection(self):
+        self.assertEqual(
+            sets.intersection(self.sample_set_a, self.sample_set_b),
+            self.sample_set_a.intersection(self.sample_set_b),
+        )
+
     def test_disjoint(self):
         self.assertEqual(
             sets.are_disjoint(self.sample_set_d, self.sample_set_a),
@@ -67,18 +98,6 @@ class SetsTest(unittest.TestCase):
             sets.are_disjoint(self.sample_set_c, self.sample_set_a),
         )
 
-    def test_union(self):
-        self.assertEqual(
-            sets.union(self.sample_set_a, self.sample_set_b),
-            self.sample_set_a.union(self.sample_set_b),
-        )
-
-    def test_intersection(self):
-        self.assertEqual(
-            sets.intersection(self.sample_set_a, self.sample_set_b),
-            self.sample_set_a.intersection(self.sample_set_b),
-        )
-
     def test_difference(self):
         self.assertEqual(
             sets.difference(self.sample_set_a, self.sample_set_b),
@@ -89,6 +108,12 @@ class SetsTest(unittest.TestCase):
         self.assertEqual(
             sets.symmetric_difference(self.sample_set_a, self.sample_set_b),
             self.sample_set_a.symmetric_difference(self.sample_set_b),
+        )
+
+    def test_cartesian_product(self):
+        self.assertEqual(
+            sets.cartesian_product(self.sample_set_a, self.sample_set_b),
+            set(product(self.sample_set_a, self.sample_set_b)),
         )
 
 
