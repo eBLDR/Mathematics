@@ -17,7 +17,7 @@ def min_value(data_set: list) -> (int, float):
 
 def range_(data_set: list) -> (int, float):
     """
-    Calculates the range, highest value - lowest value.
+    Calculates the range: highest value - lowest value.
     """
     return max(data_set) - min(data_set)
 

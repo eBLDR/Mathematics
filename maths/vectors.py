@@ -14,7 +14,7 @@ def add_vectors(*args):
     """ Simple vector addition.
     r = (Ax + Bx, Ay + By, Az + Bz) """
     if check_length(*args):
-        r = [0 for n in range(len(args[0]))]
+        r = [0 for _ in range(len(args[0]))]
         for vector in args:
             for k in range(len(vector)):
                 r[k] += vector[k]

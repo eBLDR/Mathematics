@@ -68,7 +68,7 @@ def create_matrix(rows: int, columns: int, type_: str):
 
         matrix.append(row)
 
-    prompt = f'{type_} matrix of {rows} rows and {columns} columns: '
+    prompt = f"{type_} matrix of {rows} rows and {columns} columns: "
 
     return matrix, prompt
 
@@ -176,7 +176,7 @@ def main():
 
 
 options_available = {
-    'Create Matrix': create_matrix_init,
+    "Create matrix": create_matrix_init,
 }
 
 # to test stuff
