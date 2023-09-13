@@ -86,7 +86,6 @@ def addition(matrix_1: list, matrix_2: list) -> list:
         matrix_result.append(
             [
                 number_1 + number_2 for number_1, number_2 in zip(row_1, row_2)
-
             ]
         )
 
