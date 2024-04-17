@@ -1,8 +1,3 @@
-"""
-Avoiding to use Python in-built methods for sets.
-"""
-
-
 def cardinality(set_):
     """
     Equivalent to:
@@ -117,7 +112,7 @@ def intersection(set_a, set_b):
 def are_disjoint(set_a, set_b):
     """
     Equivalent to:
-    return len(intersection(set_a, set_b)) == 0
+    return len(set_a & set_b) == 0
     """
     for e in set_a:
         if membership(e, set_b):
