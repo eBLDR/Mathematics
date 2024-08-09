@@ -1,111 +1,117 @@
 """ A collection of matrix transformations and other properties. """
 import random
-
-from maths import tools
-
-
-def display(matrix: list, prompt: str) -> None:
-    """ Display matrices nicely. """
-    print(prompt)
-    for row in matrix:
-        for number in row:
-            print(number, end=' ')
-        print()
+from typing import Union
 
 
-def get_dimensions(matrix: list) -> tuple:
-    """
-    Calculates matrix's dimensions:
-        m -> number of rows
-        n -> number of columns
-    :return: (m, n)
-    """
-    return len(matrix), len(matrix[0])
-
-
-def is_square(matrix: list) -> bool:
-    """ Check if number of rows is equal to number of columns. """
-    return len(matrix) == len(matrix[0])
-
-
-def create_matrix_init():
-    """ Collects needed data. """
-    matrix_types = {
-        'Null': 'null',
-        'Identity': 'identity',
-        'Known': 'known',
-        'Random': 'random',
-    }
-
-    type_ = matrix_types[tools.get_option(matrix_types)]
-    rows = tools.get_integer('Number of rows: ')
-    columns = rows if type_ != 'identity' else tools.get_integer('Number of columns: ')
-
-    return create_matrix(rows, columns, type_)
-
-
-def create_matrix(rows: int, columns: int, type_: str):
-    """ Type can be: null / identity / known
-    Null - full of 0.
-    Identity - full of 0 except for the diagonal.
-    Known - with given numbers.
-    Random - random integers from 0 to 9
-    """
-    matrix = []
-
-    for r in range(rows):
-        row = []
-
-        for c in range(columns):
-            if type_ == 'null':
-                row.append(0)
-            elif type_ == 'identity':
-                row.append(1) if r == c else row.append(0)
-            elif type_ == 'known':
-                row.append(tools.get_integer(f'Element in row {r + 1} column {c + 1}: '))
-            elif type_ == 'random':
-                row.append(random.randint(0, 9))
-
-        matrix.append(row)
-
-    prompt = f"{type_} matrix of {rows} rows and {columns} columns: "
-
-    return matrix, prompt
-
-
-def addition(matrix_1: list, matrix_2: list) -> list:
-    """
-    Matrix addition.
-    """
-    if get_dimensions(matrix_1) == get_dimensions(matrix_2):
-        raise Exception('Both matrices should have the same dimension.')
-
-    matrix_result = []
-
-    for row_1, row_2 in zip(matrix_1, matrix_2):
-        matrix_result.append(
-            [
-                number_1 + number_2 for number_1, number_2 in zip(row_1, row_2)
-            ]
+class Matrix:
+    def __init__(
+            self,
+            number_of_rows: int,
+            number_of_columns: int,
+            element_value: Union[int, float, complex] = None,
+            choices_value: tuple = tuple(range(0, 9)),
+    ):
+        self.number_of_rows = number_of_rows
+        self.number_of_columns = number_of_columns
+        self.entries: list[list] = [[]]
+        self._generate(
+            element_value=element_value,
+            choices_value=choices_value,
         )
 
-    return matrix_result
+    def __str__(self):
+        """
+        a1 a2 . . . an
+        b1 b2 . . . bn
+        .  .  . . . .
+        .  .  . . . .
+        .  .  . . . .
+        n1 n2 . . . nn
+        """
+        # return "\n".join([" ".join([str(element) for element in row]) for row in self.entries])
+        return "\n".join([" ".join(map(str, row)) for row in self.entries])
+
+    def _generate(self, element_value: Union[int, float, complex] = None, choices_value: tuple = None):
+        self.entries = [
+            [element_value for _ in range(self.number_of_columns)]
+            if element_value
+            else random.choices(choices_value, k=self.number_of_columns)
+            for _ in range(self.number_of_rows)
+        ]
+
+    @property
+    def dimension(self) -> tuple[int, int]:
+        """
+        Returns matrix's dimensions.
+        :return: (m, n)
+        """
+        return self.number_of_rows, self.number_of_columns
+
+    def is_square(self) -> bool:
+        """ Check if number of rows is equal to number of columns. """
+        return self.number_of_rows == self.number_of_columns
+
+    def is_magic(self) -> bool:
+        """ Is magic if the sum of all the items on each row, each column,
+        and each diagonal is equal. """
+        if not self.is_square():
+            return False
+
+        reference_number = None
+
+        # Checking rows
+        for row in self.entries:
+            if sum(row) != reference_number:
+                return False
+
+        # Checking columns
+        for i in range(self.number_of_columns):
+            if sum([self.entries[j][i] for j in range(self.number_of_rows)]) != reference_number:
+                return False
+
+        # Checking diagonals
+        if (
+                # Top left to bottom right
+                sum([self.entries[i][i] for i in range(self.number_of_rows)]) != reference_number != reference_number
+                or
+                # Top right to bottom left
+                sum([self.entries[i][len(self.entries) - 1 - i] for i in range(self.number_of_rows)]) != reference_number
+        ):
+            return False
+
+        return True
+
+    # Operations
+    def transpose(self):
+        self.entries = list(list(row) for row in zip(*self.entries))
+
+    def matrix_addition(self, matrix):
+        if self.dimension != matrix.dimension:
+            raise Exception("Both matrices should have the same dimension.")
+
+        self.entries = [
+            map(sum, zip(*rows))
+            for rows in zip(self.entries, matrix.entries)
+        ]
+
+    def scalar_product(self, k: Union[int, float, complex]):
+        self.entries = [
+            [element * k for element in row]
+            for row in self.entries
+        ]
 
 
-def scalar_product(matrix: list, scalar: int) -> list:
-    """
-    Scalar product.
-    """
-    matrix_result = []
-
-    for row in matrix:
-        matrix_result.append(
-            [
-                number * scalar for number in row
-            ]
+class NullMatrix(Matrix):
+    def __init__(self, number_of_rows: int, number_of_columns: int):
+        super().__init__(
+            number_of_rows=number_of_rows,
+            number_of_columns=number_of_columns,
+            element_value=0,
         )
 
-    return matrix_result
+
+class IdentityMatrix(Matrix):
+    ...
 
 
 def dot_product(matrix_1: list, matrix_2: list) -> list:
@@ -126,61 +132,3 @@ def dot_product(matrix_1: list, matrix_2: list) -> list:
             row_result.append(value)
 
     return matrix_result
-
-
-def is_magic(matrix: list) -> bool:
-    """ Is magic if the sum of all the items on each row, and each column,
-    and each diagonal is equal. """
-    if not is_square(matrix):
-        return False
-
-    list_of_sums = []
-
-    # Checking rows
-    for row in matrix:
-        list_of_sums.append(sum(row))
-
-    # Checking columns
-    for i in range(len(matrix[0])):
-        column = []
-        for j in range(len(matrix)):
-            column.append(matrix[j][i])
-        list_of_sums.append(sum(column))
-
-    # Checking diagonals
-    diagonal_1 = []  # Top left to bottom right
-    diagonal_2 = []  # Top right to bottom left
-
-    for i in range(len(matrix)):
-        diagonal_1.append(matrix[i][i])
-        diagonal_2.append(matrix[i][len(matrix) - 1 - i])
-
-    list_of_sums.append(sum(diagonal_1))
-    list_of_sums.append(sum(diagonal_2))
-
-    # Check if all the numbers in list_of_sums are equal
-    reference_number = list_of_sums[0]
-
-    for value in list_of_sums[1:]:
-        if value != reference_number:
-            return False
-    else:
-        return True
-
-
-def main():
-    option = tools.get_option(options_available)
-    result, prompt = options_available[option]()
-    display(result, prompt)
-
-
-options_available = {
-    "Create matrix": create_matrix_init,
-}
-
-# to test stuff
-if __name__ == '__main__':
-    m, p = create_matrix(3, 3, 'known')
-    print(m)
-    display(m, p)
-    print(is_magic(m))
