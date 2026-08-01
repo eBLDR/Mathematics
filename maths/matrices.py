@@ -5,11 +5,11 @@ from typing import Union
 
 class Matrix:
     def __init__(
-            self,
-            number_of_rows: int,
-            number_of_columns: int,
-            element_value: Union[int, float, complex] = None,
-            choices_value: tuple = tuple(range(0, 9)),
+        self,
+        number_of_rows: int,
+        number_of_columns: int,
+        element_value: Union[int, float, complex] = None,
+        choices_value: tuple = tuple(range(0, 9)),
     ):
         self.number_of_rows = number_of_rows
         self.number_of_columns = number_of_columns
@@ -61,6 +61,8 @@ class Matrix:
 
         # Checking rows
         for row in self.entries:
+            if reference_number is None:
+                reference_number = sum(row)
             if sum(row) != reference_number:
                 return False
 
@@ -71,11 +73,11 @@ class Matrix:
 
         # Checking diagonals
         if (
-                # Top left to bottom right
-                sum([self.entries[i][i] for i in range(self.number_of_rows)]) != reference_number != reference_number
-                or
-                # Top right to bottom left
-                sum([self.entries[i][len(self.entries) - 1 - i] for i in range(self.number_of_rows)]) != reference_number
+            # Top left to bottom right
+            sum([self.entries[i][i] for i in range(self.number_of_rows)]) != reference_number
+            or
+            # Top right to bottom left
+            sum([self.entries[i][len(self.entries) - 1 - i] for i in range(self.number_of_rows)]) != reference_number
         ):
             return False
 

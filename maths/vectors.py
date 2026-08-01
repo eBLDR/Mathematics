@@ -1,4 +1,6 @@
-""" A collection of vector operations and other properties. """
+class Vector:
+    def __init__(self, *args):
+        self.components = args
 
 
 def check_length(*args):
@@ -22,13 +24,11 @@ def add_vectors(*args):
         return r
 
 
-def scalar_product(v1, v2):
-    """ Scalar product between 2 vectors.
+def dot_product(v1, v2):
+    """ Dot product between 2 vectors.
     r = (AxBx + AyBy + AzBz) """
     if check_length(v1, v2):
-        r = [a * b for a, b in zip(v1, v2)]
-
-        return r
+        return [a * b for a, b in zip(v1, v2)]
 
 
 if __name__ == '__main__':
@@ -37,4 +37,4 @@ if __name__ == '__main__':
     ve3 = [4, -7, 0]
 
     print(add_vectors(ve1, ve2, ve3))
-    print(scalar_product(ve1, ve2))
+    print(dot_product(ve1, ve2))

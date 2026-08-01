@@ -1,7 +1,6 @@
 import unittest
 
-from maths.arithmetic import AbsoluteValue, Addition, Division, Exponentiation, Multiplication, Subtraction, Successor, \
-    Predecessor
+from maths.arithmetic import AbsoluteValue, Addition, Division, Exponentiation, Multiplication, Predecessor, Subtraction, Successor
 
 
 class TestAbsoluteValue(unittest.TestCase):
